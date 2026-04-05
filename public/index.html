@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cards Against Humanity BR — Lobby</title>
+  <meta name="description" content="Jogue Cards Against Humanity online com seus amigos em Português Brasileiro. Crie uma sala ou entre em uma existente.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="lobby-body">
+
+  <!-- Background animated cards -->
+  <div class="bg-cards-container" aria-hidden="true">
+    <div class="bg-card bg-card--white" style="--delay:0s;--x:5%;--rot:-15deg">Existencial</div>
+    <div class="bg-card bg-card--black" style="--delay:0.5s;--x:20%;--rot:8deg">_</div>
+    <div class="bg-card bg-card--white" style="--delay:1s;--x:40%;--rot:-5deg">o Ex</div>
+    <div class="bg-card bg-card--black" style="--delay:1.5s;--x:60%;--rot:12deg">_</div>
+    <div class="bg-card bg-card--white" style="--delay:2s;--x:75%;--rot:-20deg">DETRAN</div>
+    <div class="bg-card bg-card--black" style="--delay:2.5s;--x:88%;--rot:5deg">_</div>
+  </div>
+
+  <div class="lobby-container">
+    <!-- Header -->
+    <header class="lobby-header">
+      <div class="logo-stack">
+        <div class="logo-card logo-card--black">
+          <span class="logo-pick">CAH</span>
+          <span class="logo-symbol">♠</span>
+        </div>
+        <div class="logo-card logo-card--white">BR</div>
+      </div>
+      <h1 class="lobby-title">Cards Against<br><em>Humanity</em></h1>
+      <p class="lobby-subtitle">O jogo de cartas para pessoas horríveis.<br>Em Português Brasileiro.</p>
+    </header>
+
+    <!-- Tab switcher -->
+    <div class="tab-switcher" role="tablist">
+      <button class="tab-btn tab-btn--active" id="tab-create" role="tab" aria-selected="true" aria-controls="panel-create">
+        ＋ Criar Sala
+      </button>
+      <button class="tab-btn" id="tab-join" role="tab" aria-selected="false" aria-controls="panel-join">
+        → Entrar na Sala
+      </button>
+    </div>
+
+    <!-- Create Room Panel -->
+    <div class="tab-panel tab-panel--active" id="panel-create" role="tabpanel">
+      <form id="form-create" class="lobby-form" autocomplete="off">
+        <div class="form-group">
+          <label for="create-name">Seu apelido</label>
+          <input type="text" id="create-name" placeholder="Como te chamam?" maxlength="20" required>
+        </div>
+        <div class="form-group">
+          <label for="win-points">Pontos para vencer</label>
+          <div class="range-wrapper">
+            <input type="range" id="win-points" min="3" max="20" value="8" step="1">
+            <span class="range-value" id="win-points-display">8</span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn--primary" id="btn-create">
+          <span>Criar Sala</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"/><line x1="6" y1="12" x2="18" y2="12"/></svg>
+        </button>
+      </form>
+    </div>
+
+    <!-- Join Room Panel -->
+    <div class="tab-panel" id="panel-join" role="tabpanel">
+      <form id="form-join" class="lobby-form" autocomplete="off">
+        <div class="form-group">
+          <label for="join-name">Seu apelido</label>
+          <input type="text" id="join-name" placeholder="Como te chamam?" maxlength="20" required>
+        </div>
+        <div class="form-group">
+          <label for="room-code">Código da Sala</label>
+          <input type="text" id="room-code" placeholder="Ex: XKCD" maxlength="4" class="code-input" required
+            style="text-transform:uppercase;letter-spacing:0.25em;">
+        </div>
+        <button type="submit" class="btn btn--primary" id="btn-join">
+          <span>Entrar na Sala</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"/><line x1="6" y1="12" x2="18" y2="12"/></svg>
+        </button>
+      </form>
+    </div>
+
+    <!-- Error message -->
+    <div id="lobby-error" class="error-toast" role="alert" aria-live="polite"></div>
+
+    <!-- Footer -->
+    <footer class="lobby-footer">
+      <p>🃏 Inspirado em <strong>Cards Against Humanity</strong> — Versão não oficial em PT-BR</p>
+      <p>Para jogar com amigos em outros lugares, use <a href="https://ngrok.com" target="_blank" rel="noopener">ngrok</a> para expor seu servidor.</p>
+    </footer>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/lobby.js"></script>
+</body>
+</html>

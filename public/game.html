@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cards Against Humanity BR — Jogando</title>
+  <meta name="description" content="Partida de Cards Against Humanity em Português Brasileiro.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="game-body">
+
+  <!-- ─── HUD ─── -->
+  <header class="hud" id="hud">
+    <div class="hud-left">
+      <div class="hud-logo">CAH<em>BR</em></div>
+      <div class="hud-room">
+        Sala: <strong id="hud-room-code">----</strong>
+        <button class="copy-btn" id="btn-copy-code" title="Copiar código" aria-label="Copiar código da sala">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="hud-center">
+      <span class="hud-phase" id="hud-phase">Aguardando...</span>
+    </div>
+    <div class="hud-right">
+      <div class="hud-round">Rodada <span id="hud-round">-</span></div>
+    </div>
+  </header>
+
+  <!-- ─── Scoreboard (sidebar) ─── -->
+  <aside class="scoreboard" id="scoreboard">
+    <div class="scoreboard-title">🏆 Placar</div>
+    <ul class="scoreboard-list" id="scoreboard-list"></ul>
+    <div class="scoreboard-goal" id="scoreboard-goal"></div>
+  </aside>
+
+  <!-- ─── Main game area ─── -->
+  <main class="game-main" id="game-main">
+
+    <!-- LOBBY SCREEN -->
+    <section class="screen screen--active" id="screen-lobby">
+      <div class="lobby-waiting-card">
+        <div class="room-code-big" id="lobby-room-code-big">----</div>
+        <p class="room-code-hint">Compartilhe este código com seus amigos</p>
+        <button class="btn btn--ghost" id="btn-copy-big">
+          📋 Copiar código
+        </button>
+        <div class="players-waiting">
+          <h3>Jogadores na sala</h3>
+          <ul id="lobby-players-list" class="players-list"></ul>
+        </div>
+        <div id="start-btn-wrapper">
+          <button class="btn btn--primary" id="btn-start" style="display:none;">
+            🎮 Iniciar Jogo
+          </button>
+          <p class="waiting-host" id="waiting-host-msg" style="display:none;">Aguardando o host iniciar o jogo...</p>
+        </div>
+        <p class="min-players-hint">Mínimo 2 jogadores para iniciar.</p>
+      </div>
+    </section>
+
+    <!-- PLAYING SCREEN -->
+    <section class="screen" id="screen-playing">
+      <div class="playing-layout">
+        <!-- Black card -->
+        <div class="black-card-area">
+          <div class="card card--black" id="black-card">
+            <div class="card-text" id="black-card-text">...</div>
+            <div class="card-footer">
+              <span class="card-logo">CAH BR</span>
+              <span class="card-pick" id="black-card-pick"></span>
+            </div>
+          </div>
+          <div class="czar-badge" id="czar-badge"></div>
+        </div>
+
+        <!-- Status messages -->
+        <div class="play-status" id="play-status"></div>
+
+        <!-- White cards in hand -->
+        <div class="hand-area" id="hand-area">
+          <div class="hand-label" id="hand-label"></div>
+          <div class="hand-cards" id="hand-cards"></div>
+          <button class="btn btn--primary submit-btn" id="btn-submit" style="display:none;">
+            ✅ Confirmar seleção
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- JUDGING SCREEN -->
+    <section class="screen" id="screen-judging">
+      <div class="judging-layout">
+        <div class="black-card-area">
+          <div class="card card--black" id="black-card-judge">
+            <div class="card-text" id="black-card-judge-text">...</div>
+            <div class="card-footer">
+              <span class="card-logo">CAH BR</span>
+            </div>
+          </div>
+        </div>
+        <div class="judge-prompt" id="judge-prompt"></div>
+        <div class="submissions-grid" id="submissions-grid"></div>
+      </div>
+    </section>
+
+    <!-- RESULTS SCREEN -->
+    <section class="screen" id="screen-results">
+      <div class="results-card">
+        <div class="results-winner-name" id="results-winner-name"></div>
+        <div class="results-label">venceu a rodada! 🎉</div>
+        <div class="results-reveal" id="results-reveal"></div>
+        <p class="results-next">Próxima rodada em <span id="countdown">5</span>s...</p>
+      </div>
+    </section>
+
+    <!-- GAME OVER SCREEN -->
+    <section class="screen" id="screen-gameover">
+      <div class="gameover-card">
+        <div class="gameover-emoji">🏆</div>
+        <div class="gameover-title">FIM DE JOGO</div>
+        <div class="gameover-winner" id="gameover-winner"></div>
+        <div class="gameover-reveal" id="gameover-reveal"></div>
+        <div class="gameover-final-scores" id="gameover-final-scores"></div>
+        <button class="btn btn--primary" id="btn-restart" style="display:none;">🔄 Jogar Novamente</button>
+        <button class="btn btn--ghost" id="btn-leave">← Sair</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/game.js"></script>
+</body>
+</html>
